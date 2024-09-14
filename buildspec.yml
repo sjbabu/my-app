@@ -1,0 +1,18 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - echo Build started on `date`
+      - python -m unittest discover
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - aws s3 cp . s3://my-app-bucket/ --recursive
+artifacts:
+  files:
+    - '**/*'
